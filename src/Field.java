@@ -48,13 +48,18 @@ public class Field {
 
     int check (int x, int y)
     {
-       if (x==y || Math.abs(x-y)==2)
+       if (x==y)
        {
             if(field [0] [0]== field [1] [1] && field [2][2]==field[1][1])
                 return 1 ;
             if(field [0] [2]== field [1] [1] && field [2][0]==field[1][1])
                 return 1 ;
        }
+
+       if (Math.abs(x-y)==2)
+           if(field [0] [2]== field [1] [1] && field [2][0]==field[1][1])
+               return 1 ;
+
 
        if(field [y] [0] == field [y] [1] && field [y] [0] == field [y] [2])
            return 1 ;
