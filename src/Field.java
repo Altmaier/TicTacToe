@@ -48,7 +48,7 @@ public class Field {
 
     int check (int x, int y)
     {
-       if (x==y)
+       if (x==y || Math.abs(x-y)==2)
        {
             if(field [0] [0]== field [1] [1] && field [2][2]==field[1][1])
                 return 1 ;
