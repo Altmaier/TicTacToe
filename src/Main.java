@@ -6,15 +6,14 @@ public class Main
     public static void main(String[] args)
     {
         Field field = new Field() ;
-        Player [] players = new Player [2];
-        int playersNumber; //число игроков
+        Player [] players ;
+        int playersNumber; //число игроков в текущей игре
         int index = 0 ; // вспомогательная переменная
         Scanner in = new Scanner(System.in);
-        int x = 0, y = 0 ; //координаты
+        int [] coordinate = new int [2] ; //координаты
         Random randomGenerator = new Random();
 
         System.out.println("Welcome to the Tic-Tac-Toe!");
-
         while (true)
         {
             System.out.print("Enter number of players (1 or 2): ");
@@ -25,14 +24,21 @@ public class Main
                 System.out.println("Error! Incorrect number of players");
         }
 
+        if (playersNumber == 1)
+        {
+            players = new Player[playersNumber+1] ;
+            players [playersNumber] = new Player() ;
+        }
+        else
+            players = new Player[playersNumber] ;
+
         for (int i = 0; i < playersNumber; i++)
         {
             System.out.println("Enter player #" + (i + 1) + " name: ");
             String name = in.next();
             players [i] = new Player(name);
         }
-        if (playersNumber == 1)
-            players [1] = new Player() ;
+
 
         if (Math.random() > 0.5)
             index = 1 ;
@@ -55,18 +61,17 @@ public class Main
             {
                 if (players[index].getBot())
                 {
-                    x = randomGenerator.nextInt(3)+1;
-                    y = randomGenerator.nextInt(3)+1;
+                    coordinate = field.autoPlay(players[index].getPlayerSymbol()) ;
                 }
                 else
                 {
                     System.out.print("Enter coordinate 'x': ");
-                    x = in.nextInt() ;
+                    coordinate [0] = in.nextInt() ;
                     System.out.print("Enter coordinate 'y': ");
-                    y = in.nextInt() ;
+                    coordinate [1] = in.nextInt() ;
                 }
 
-                int result = field.setSymbol(x,y,players[index].getPlayerSymbol());
+                int result = field.setSymbol(coordinate,players[index].getPlayerSymbol());
                 if (result == 0)
                     break ;
                 switch (result)
@@ -79,7 +84,7 @@ public class Main
 
             System.out.println("Now field looks like this:");
             field.showField();
-            int res = field.check(x-1,y-1) ;
+            int res = field.check(coordinate, players[index].getPlayerSymbol()) ;
             if(res == 1)
             {
                 System.out.println("The winner is " + players [index].getName() + "!");
@@ -90,8 +95,6 @@ public class Main
                 System.out.println("Won the friendship!");
                 break ;
             }
-
-
 
             index = index^1;
 

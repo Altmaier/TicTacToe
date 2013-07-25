@@ -1,6 +1,6 @@
 public class Player
 {
-    final static String AUTO_NAME = "AutoPlayer";
+    private final static String AUTO_NAME = "AutoPlayer";
     private String name ;
     private char playerSymbol ;
     private boolean bot = false ; //автоИгрок или нет
