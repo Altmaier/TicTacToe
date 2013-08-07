@@ -9,14 +9,21 @@ public class Field {
     Field()
     {
         field = new char [FIELD_SIZE] [FIELD_SIZE] ;
+        empty() ;
+
+    }
+
+    void empty ()
+    {
         for(int i = 0; i < FIELD_SIZE; i++)
             for(int j = 0; j < FIELD_SIZE; j++)
                 field [i] [j] = EMPTY_CELL ;
     }
-    int setSymbol (int [] coordinate, char playerSymbol)
+
+    int setSymbol (Coord coordinate, char playerSymbol)
     {
-        int x = coordinate [0] - 1;
-        int y = coordinate [1] - 1;
+        int x = coordinate.x - 1;
+        int y = coordinate.y - 1;
         if (x >= MIN && x < FIELD_SIZE)
         {
             if (y >= MIN && y < FIELD_SIZE)
@@ -52,10 +59,10 @@ public class Field {
         }
     }
 
-    int check (int [] coordinate, char symbol)
+    int check (Coord coordinate, char symbol)
     {
-        int x = coordinate [0] - 1;
-        int y = coordinate [1] - 1;
+        int x = coordinate.x - 1;
+        int y = coordinate.y - 1;
         if (x==y)//главная диагональ
         {
            if (check_diag1(symbol)==POINTS)
@@ -168,9 +175,9 @@ public class Field {
 
     }
 
-    int [] autoPlay (char symbol)
+    Coord autoPlay (char symbol)
     {
-        int [] coordinate = new int [2] ;
+        Coord coord = new Coord() ;
         int [] [] matrix_weight = new int [FIELD_SIZE][FIELD_SIZE] ;
         for(int i = 0; i < FIELD_SIZE; i++)
             for(int j = 0; j < FIELD_SIZE; j++)
@@ -198,9 +205,9 @@ public class Field {
                 {
                     if (count [k]==(POINTS-1))
                     {
-                        coordinate [0] = j + 1 ;
-                        coordinate [1] = i + 1 ;
-                        return coordinate ;
+                        coord.x = j + 1 ;
+                        coord.y = i + 1 ;
+                        return coord ;
                     }
 
                     if(count [index] >  count [k])
@@ -219,10 +226,10 @@ public class Field {
                     minY = i ;
                 }
             }
-        coordinate [0] = minX + 1 ;
-        coordinate [1] = minY + 1 ;
+        coord.x = minX + 1 ;
+        coord.y = minY + 1 ;
 
-        return coordinate ;
+        return coord ;
 
     }
 
